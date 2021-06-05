@@ -31,7 +31,7 @@ in modern oceans. Other fish such as paddlefish,
 garpike and stingray are also present.'''
 ]
 
-#general variables
+#generic variables
 separator = "-" * 40
 
 
@@ -109,9 +109,16 @@ for word in separated_words:
     else:
         analyzed_text["words_lenght"].setdefault(len(word), [word])
 
+#spacer - how many spaces will be printed in header and graph, to keep header and graph width dynamic and consistent
+spacer = 0
+for key in analyzed_text["words_lenght"].keys():
+    value = len(analyzed_text["words_lenght"][key])
+    if value > spacer:
+        spacer = value//2
+
 #printing out header of graph
 print(separator)
-print("""LEN|     OCCURENCES     |NR.""")
+print(f"""LEN|{" "*(spacer)}OCCURENCES{" "*(spacer)}|NR.""")
 print(separator)
 
 #printing out data of graph loop
@@ -121,7 +128,7 @@ while i <= max(analyzed_text["words_lenght"]): #loop while 'i' is less than long
     for key in analyzed_text["words_lenght"].keys():
         if key == i:
             value_count = len(analyzed_text["words_lenght"][key])
-            print(f'{" "*(3-len(str(key)))}{key}|{"*"*value_count}{" "*(20 - value_count)}|{len(analyzed_text["words_lenght"][key])}')
+            print(f'{" "*(3-len(str(key)))}{key}|{"*"*value_count}{" "*(2*spacer - value_count + 10)}|{len(analyzed_text["words_lenght"][key])}')
             pokus = 1
             i += 1
         else:
